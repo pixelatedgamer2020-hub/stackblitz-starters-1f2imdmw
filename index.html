@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RE-ASCEND | Build Your Best Self</title>
+<style>
+:root{--bg:#04060d;--panel:rgba(8,16,36,.88);--blue:#3aa0ff;--cyan:#7fd4ff;--deep:#1a4fa0;--text:#dbe9ff;--muted:#7a92bd;--red:#ff4d5e;--rgb:58,160,255;--glow:#0d1f45;--line:rgba(var(--rgb),.45)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:radial-gradient(ellipse at 50% -10%,var(--glow) 0%,var(--bg) 60%) fixed;color:var(--text);font-family:"Segoe UI",Roboto,Helvetica,Arial,sans-serif;min-height:100vh;padding:24px;line-height:1.55}
+body::before{content:"";position:fixed;inset:0;background-image:linear-gradient(rgba(var(--rgb),.05) 1px,transparent 1px),linear-gradient(90deg,rgba(var(--rgb),.05) 1px,transparent 1px);background-size:44px 44px;pointer-events:none}
+.container{max-width:1100px;margin:auto;position:relative}
+header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;margin-bottom:26px}
+.logo{font-size:26px;font-weight:700;letter-spacing:5px;color:var(--cyan);text-shadow:0 0 14px var(--blue)}
+.tagline{color:var(--muted);font-size:13px;margin-top:4px}
+.hd-right{display:flex;gap:10px;align-items:center;position:relative}
+.chip{border:1px solid var(--line);background:var(--panel);padding:10px 16px;color:var(--cyan);font-weight:600;font-size:14px;box-shadow:0 0 14px rgba(var(--rgb),.15)}
+.mute{background:none;border:1px solid var(--line);color:var(--muted);padding:10px 14px;cursor:pointer;font-size:13px}
+.win{background:var(--panel);border:1px solid var(--line);box-shadow:0 0 22px rgba(var(--rgb),.18),inset 0 0 30px rgba(var(--rgb),.06);padding:24px;position:relative;margin-bottom:20px}
+.win::before,.win::after{content:"";position:absolute;width:14px;height:14px;border:2px solid var(--cyan)}
+.win::before{top:-2px;left:-2px;border-right:0;border-bottom:0}
+.win::after{bottom:-2px;right:-2px;border-left:0;border-top:0}
+.win h2{font-size:14px;font-weight:600;letter-spacing:3px;color:var(--cyan);text-align:center;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.grid .win{margin-bottom:0}
+p{color:var(--muted)}
+.hero{display:grid;grid-template-columns:1fr 200px;gap:28px;align-items:center}
+.hero .lab{font-size:12px;letter-spacing:3px;color:var(--cyan);margin-bottom:10px}
+.hero h1{font-size:36px;color:#fff;text-shadow:0 0 18px rgba(var(--rgb),.6);margin-bottom:10px}
+.lvbox{text-align:center;border-left:1px solid var(--line);padding-left:24px}
+.lvbox small{font-size:12px;letter-spacing:3px;color:var(--muted)}
+.lvbox .n{font-size:72px;font-weight:700;color:#fff;text-shadow:0 0 20px var(--blue);line-height:1}
+.stage{display:inline-block;margin-top:10px;border:1px solid var(--cyan);padding:3px 14px;font-size:13px;color:var(--cyan)}
+.bar{height:12px;background:#0a1630;border:1px solid var(--line);margin-top:14px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--deep),var(--cyan));box-shadow:0 0 10px var(--blue);transition:width .8s cubic-bezier(.2,.8,.2,1)}
+.sub{font-size:12px;color:var(--muted);margin-top:6px}
+.big{font-size:46px;font-weight:700;color:#fff;text-shadow:0 0 16px var(--blue);margin:6px 0}
+.week{display:flex;gap:6px;margin-top:16px}
+.day{flex:1;text-align:center;font-size:12px;padding:10px 2px;border:1px solid rgba(var(--rgb),.25);color:var(--muted);background:rgba(10,22,48,.6)}
+.day.on{background:rgba(var(--rgb),.22);color:#fff;border-color:var(--blue)}
+.day.today{outline:2px solid var(--cyan)}
+.quote{font-size:19px;font-style:italic;color:var(--cyan);line-height:1.7;margin:14px 0}
+.timer{font-size:56px;font-weight:700;color:#fff;text-shadow:0 0 20px var(--blue);letter-spacing:5px;margin:14px 0 2px}
+.mode{color:var(--cyan);font-size:13px;letter-spacing:1px}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.btn{background:rgba(var(--rgb),.14);border:1px solid var(--blue);color:var(--cyan);padding:9px 16px;cursor:pointer;font-size:13px;transition:.2s}
+.btn:hover:not(:disabled){background:var(--blue);color:#02050c;box-shadow:0 0 16px var(--blue)}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.x{border-color:var(--red);color:var(--red);background:transparent;padding:9px 12px}
+.btn.x:hover{background:var(--red);color:#fff;box-shadow:0 0 14px var(--red)}
+.row{display:flex;align-items:center;gap:10px;border:1px solid rgba(var(--rgb),.3);padding:11px 13px;margin:8px 0;background:rgba(10,22,48,.6)}
+.row.done{opacity:.5}.row.done .t{text-decoration:line-through}
+.row .t{flex:1;font-size:14px}
+.tag{font-size:12px;color:var(--muted);white-space:nowrap}
+input[type=text]{background:#08122a;border:1px solid var(--line);color:var(--text);padding:11px;width:100%;margin-top:12px;font-size:14px}
+input:focus,button:focus-visible{outline:2px solid var(--cyan)}
+.stages{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:8px}
+.stages .hit{color:var(--cyan)}
+.gname{font-size:30px;color:#fff;text-shadow:0 0 14px var(--blue);margin:8px 0}
+footer{text-align:center;color:var(--muted);padding:28px 10px;font-size:13px}
+/* LEVEL UP */
+#ov{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;background:rgba(2,4,10,.92);padding:16px}
+#ov.show{display:flex;animation:fade .3s}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+#ov.show .flash{animation:flash .9s ease-out}
+@keyframes flash{0%{opacity:.8}100%{opacity:0}}
+.ring{position:absolute;left:50%;top:50%;width:60px;height:60px;border:2px solid var(--blue);border-radius:50%;transform:translate(-50%,-50%) scale(0);opacity:0;box-shadow:0 0 30px var(--blue)}
+#ov.show .ring{animation:ring 2s ease-out infinite}
+#ov.show .ring:nth-of-type(3){animation-delay:.6s}
+#ov.show .ring:nth-of-type(4){animation-delay:1.2s}
+@keyframes ring{0%{transform:translate(-50%,-50%) scale(0);opacity:.9}100%{transform:translate(-50%,-50%) scale(14);opacity:0}}
+.popup{position:relative;width:min(520px,100%);opacity:0;transform:translateY(30px) scale(.94);margin:0}
+#ov.show .popup{animation:rise .7s .9s cubic-bezier(.2,.9,.2,1) forwards}
+@keyframes rise{to{opacity:1;transform:none}}
+.lu{position:absolute;left:0;right:0;top:50%;text-align:center;transform:translateY(-50%);pointer-events:none}
+.lu .sys{font-size:13px;letter-spacing:6px;color:var(--cyan);opacity:0}
+.lu h1{font-size:clamp(46px,12vw,92px);letter-spacing:10px;color:#fff;text-shadow:0 0 30px var(--blue),0 0 70px var(--blue);opacity:0;transform:scale(2.4)}
+#ov.show .lu .sys{animation:in .5s .1s forwards,out .4s 1.6s forwards}
+#ov.show .lu h1{animation:slam .55s .25s cubic-bezier(.2,1.2,.3,1) forwards,out .4s 1.6s forwards}
+@keyframes in{to{opacity:1}}@keyframes out{to{opacity:0}}@keyframes slam{to{opacity:1;transform:scale(1)}}
+.ptabs{display:flex;gap:6px;margin-bottom:14px}
+.ptabs button{flex:1;background:transparent;border:1px solid var(--line);color:var(--muted);padding:9px;cursor:pointer;font-size:12px;letter-spacing:1px}
+.ptabs button.on{color:var(--cyan);background:rgba(var(--rgb),.16)}
+.ptab{display:none;text-align:center;font-size:15px;line-height:1.8}.ptab.on{display:block}
+.ptab .arrow{font-size:40px;color:#fff;text-shadow:0 0 16px var(--blue);margin:8px 0}
+.close{margin-top:18px;width:100%}
+/* WELCOME */
+#wel{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 40%,var(--glow) 0%,#02040a 70%);padding:16px;transition:opacity 1s ease,transform 1s ease,filter 1s ease;overflow:hidden}
+#wel.out{opacity:0;transform:scale(1.25);filter:blur(8px);pointer-events:none}
+#wel.gone{display:none}
+.wring{position:absolute;left:50%;top:50%;width:60px;height:60px;border:2px solid var(--blue);border-radius:50%;transform:translate(-50%,-50%) scale(0);opacity:0;box-shadow:0 0 30px var(--blue)}
+#wel.go .wring{animation:ring 2.2s ease-out infinite}
+#wel.go .wring:nth-of-type(2){animation-delay:.7s}
+#wel.go .wring:nth-of-type(3){animation-delay:1.4s}
+.wbox{width:min(440px,100%);text-align:center;position:relative}
+.wbox .btn{width:100%;margin-top:14px;padding:12px}
+.wsys{font-size:13px;letter-spacing:6px;color:var(--cyan);margin-bottom:12px}
+.wbox p{margin-top:4px;font-size:14px}
+#wMsg{display:none;text-align:center;position:relative;max-width:100%}
+#wel.go #wAsk{display:none}
+#wel.go #wMsg{display:block}
+#wMsg .wsys{opacity:0;animation:in .5s .1s forwards}
+#wMsg h1{font-size:clamp(34px,10vw,84px);letter-spacing:clamp(4px,1.6vw,12px);color:#fff;text-shadow:0 0 30px var(--blue),0 0 70px var(--blue);opacity:0;transform:scale(2.2);word-break:break-word;line-height:1.15}
+#wMsg h1.a{animation:slam .6s .35s cubic-bezier(.2,1.2,.3,1) forwards}
+#wMsg h1.b{animation:slam .6s .95s cubic-bezier(.2,1.2,.3,1) forwards;color:var(--cyan)}
+.langs{display:flex;gap:6px;margin-top:14px}
+.lg{flex:1;background:transparent;border:1px solid var(--line);color:var(--muted);padding:10px 6px;cursor:pointer;font-size:14px}
+.lg.on{color:#fff;background:rgba(var(--rgb),.25);border-color:var(--cyan);box-shadow:0 0 12px rgba(var(--rgb),.4)}
+html[lang=ar] *{letter-spacing:normal!important}
+.timer{direction:ltr}
+html[dir=rtl] .lvbox{border-left:0;border-right:1px solid var(--line);padding-left:0;padding-right:24px}
+html[dir=rtl] .row .t{text-align:right}
+.thp{position:absolute;top:calc(100% + 10px);inset-inline-end:0;z-index:20;width:min(250px,80vw);margin:0;padding:16px;display:none}
+.thp.show{display:block}
+.sw{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.sw button{width:30px;height:30px;border-radius:50%;border:2px solid transparent;background:currentColor;cursor:pointer}
+.sw button.on{border-color:#fff;box-shadow:0 0 12px currentColor}
+.cust{display:flex;justify-content:space-between;align-items:center;margin-top:16px;font-size:13px;color:var(--muted)}
+input[type=color]{width:46px;height:30px;border:1px solid var(--line);background:none;padding:0;cursor:pointer}
+@media(max-width:760px){html[dir=rtl] .lvbox{border-right:0;padding-right:0}body{padding:14px}.grid{grid-template-columns:1fr}.hero{grid-template-columns:1fr}.lvbox{border-left:0;border-top:1px solid var(--line);padding:16px 0 0}.hero h1{font-size:27px}.logo{font-size:21px}.timer{font-size:42px}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01s!important;animation-delay:0s!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="wel" role="dialog" aria-modal="true" aria-label="Welcome">
+  <div class="wring"></div><div class="wring"></div><div class="wring"></div>
+  <div class="wbox" id="wAsk">
+    <div class="wsys">[ RE-ASCEND ]</div>
+    <div class="win">
+      <h2 id="wTitle">[ WHAT SHOULD WE CALL YOU? ]</h2>
+      <p id="wSub">Enter your name to begin your journey.</p>
+      <div class="langs" id="langs"></div>
+      <input type="text" id="wName" maxlength="20" placeholder="Your name..." autocomplete="given-name">
+      <button class="btn" id="wGo">BEGIN</button>
+    </div>
+  </div>
+  <div id="wMsg"><div class="wsys">[ IDENTITY CONFIRMED ]</div><h1 class="a">WELCOME</h1><h1 class="b" id="wN"></h1></div>
+</div>
+
+<div class="container">
+
+<header>
+  <div><div class="logo">RE-ASCEND</div><div class="tagline">Build habits. Control distractions. Become better.</div></div>
+  <div class="hd-right"><div class="chip">LV <span id="hLvl">1</span> &nbsp;|&nbsp; <span id="xp">0</span> XP</div><button class="mute" id="mute" onclick="toggleMute()">Sound: on</button><button class="mute" id="lgBtn"></button><button class="mute" id="thBtn">Theme</button>
+  <div class="win thp" id="thPanel"><h2>[ THEME COLOR ]</h2><div class="sw" id="sw"></div><div class="cust"><span>Custom color</span><input type="color" id="cc" value="#3aa0ff"></div></div></div>
+</header>
+
+<section class="win hero">
+  <div>
+    <div class="lab">[ YOUR SELF-IMPROVEMENT JOURNEY ]</div>
+    <h1>Become 1% Better Every Day.</h1>
+    <p>Your path to better focus, stronger habits and a disciplined life starts here. Take small steps, stay consistent and level up.</p>
+    <div class="bar"><i id="xpBar"></i></div>
+    <div class="sub" id="xpTxt"></div>
+  </div>
+  <div class="lvbox"><small>LEVEL</small><div class="n" id="lvl">1</div><div class="stage" id="stage">Beginner</div></div>
+</section>
+
+<div class="grid">
+
+<section class="win">
+  <h2>[ DAILY STREAK ]</h2>
+  <div class="big"><span id="streak">0</span> days</div>
+  <p id="streakMsg">Start your journey today.</p>
+  <div class="week" id="week"></div>
+  <p class="sub" style="font-size:13px;margin-top:14px">Best streak: <b style="color:var(--cyan)" id="best">0</b> days</p>
+</section>
+
+<section class="win">
+  <h2>[ DAILY MOTIVATION ]</h2>
+  <p class="quote" id="quote"></p>
+  <button class="btn" onclick="showQuote()">NEW QUOTE</button>
+</section>
+
+<section class="win">
+  <h2>[ FOCUS TIMER ]</h2>
+  <p>Work without distractions. Take a short break when you finish.</p>
+  <div class="timer" id="timer">25:00</div>
+  <div class="mode" id="mode">Focus session</div>
+  <div class="btns">
+    <button class="btn" onclick="startT()">START</button>
+    <button class="btn" onclick="pauseT()">PAUSE</button>
+    <button class="btn x" onclick="resetT()">RESET</button>
+    <button class="btn" onclick="setBreak()">5-MIN BREAK</button>
+  </div>
+  <p class="sub" id="tMsg" style="font-size:13px;margin-top:12px">Completing a focus session gives +25 XP.</p>
+</section>
+
+<section class="win">
+  <h2>[ DAILY GOALS ]</h2>
+  <p>Set your goals and complete them one by one.</p>
+  <div id="gList"></div>
+  <input type="text" id="gIn" maxlength="60" placeholder="Enter a new goal...">
+  <div class="btns"><button class="btn" onclick="addGoal()">+ ADD GOAL</button></div>
+  <p class="sub" style="font-size:13px;margin-top:14px">Completed today: <b style="color:var(--cyan)" id="gDone">0</b> goals</p>
+</section>
+
+<section class="win">
+  <h2>[ DAILY CHALLENGES ]</h2>
+  <p>Complete these for bonus XP. They reset every day.</p>
+  <div id="cList"></div>
+</section>
+
+<section class="win">
+  <h2>[ PROGRESS GROWTH ]</h2>
+  <p>Every goal you complete today moves you forward.</p>
+  <div class="gname" id="gName">Seed</div>
+  <p id="gMsg">Your growth begins here.</p>
+  <div class="bar"><i id="gBar"></i></div>
+  <div class="stages" id="gStages"><span data-n="0">Seed</span><span data-n="1">Sprout</span><span data-n="3">Growing</span><span data-n="5">Blooming</span><span data-n="8">Thriving</span></div>
+  <p class="sub" id="gTxt">0% of today's goals completed</p>
+</section>
+
+</div>
+
+<footer>RE-ASCEND &copy; 2026<br>Small steps. Big changes. Better you.</footer>
+</div>
+
+<div id="ov" role="dialog" aria-modal="true" aria-label="Level up">
+  <div class="flash"></div><div class="ring"></div><div class="ring"></div><div class="ring"></div>
+  <div class="lu"><div class="sys">[ NOTIFICATION ]</div><h1>LEVEL UP</h1></div>
+  <div class="popup win">
+    <h2>[ LEVEL UP ]</h2>
+    <div class="ptabs"><button class="on" data-p="p1">RESULT</button><button data-p="p2">NEXT STEP</button></div>
+    <div class="ptab on" id="p1">You have leveled up.<div class="arrow"><span id="oL"></span> &rarr; <span id="nL"></span></div><span id="nS"></span></div>
+    <div class="ptab" id="p2"><span id="tip"></span></div>
+    <button class="btn close" onclick="closeOv()">CONTINUE</button>
+  </div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+const ds=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+const todayS=()=>ds(new Date());
+const def={lvl:1,xp:0,mute:false,last:"",streak:0,best:0,date:"",qi:-1,
+ goals:[{t:"Study for 25 minutes",d:false,r:false},{t:"Spend time away from screens",d:false,r:false},{t:"Exercise for 15 minutes",d:false,r:false}],
+ ch:[{t:"Avoid unnecessary phone use for 30 minutes",x:15,d:false},{t:"Study or read for 20 minutes",x:15,d:false},{t:"Drink enough water today",x:10,d:false},{t:"Be active for at least 15 minutes",x:15,d:false},{t:"Sleep on time tonight",x:15,d:false}]};
+let S;try{S=Object.assign({},def,JSON.parse(store.get("dx_system")))}catch(e){S=def}
+if(S.date!==todayS()){S.goals.forEach(g=>{g.d=false;g.r=false});S.ch.forEach(c=>c.d=false);S.date=todayS()}
+const save=()=>store.set("dx_system",JSON.stringify(S));
+const need=l=>100+(l-1)*50;
+const stageOf=l=>l<3?"Beginner":l<6?"Builder":l<10?"Focused":l<15?"Disciplined":"Master";
+const tipOf=l=>({Beginner:"Notice what pulls your attention away. Awareness comes first.",Builder:"Make distractions harder to reach. Put your phone in another room.",Focused:"Protect your routines. Sleep and movement keep your focus strong.",Disciplined:"Plan for hard days in advance with if-then rules.",Master:"Help someone else build a habit. Teaching locks it in."})[stageOf(l)];
+
+/* SOUND (synthesized) */
+let ac;
+function ctx(){if(!ac){try{ac=new (window.AudioContext||window.webkitAudioContext)()}catch(e){}}if(ac&&ac.state==="suspended")ac.resume();return ac}
+function tone(f,t0,dur,type,vol,f2){const a=ctx();if(!a||S.mute)return;const o=a.createOscillator(),g=a.createGain();o.type=type;o.frequency.setValueAtTime(f,a.currentTime+t0);
+ if(f2)o.frequency.exponentialRampToValueAtTime(f2,a.currentTime+t0+dur);
+ g.gain.setValueAtTime(0,a.currentTime+t0);g.gain.linearRampToValueAtTime(vol,a.currentTime+t0+.02);g.gain.exponentialRampToValueAtTime(.0001,a.currentTime+t0+dur);
+ o.connect(g).connect(a.destination);o.start(a.currentTime+t0);o.stop(a.currentTime+t0+dur+.05)}
+const sfx={click(){tone(880,0,.08,"square",.05)},done(){tone(660,0,.12,"triangle",.14);tone(990,.1,.25,"triangle",.14)},soft(){tone(300,0,.25,"sawtooth",.07,150)},
+ level(){tone(60,0,1.4,"sine",.5,40);[392,523,659,784,1047].forEach((f,i)=>tone(f,.25+i*.11,.7,"triangle",.16));tone(1047,.9,1.4,"sine",.12)},
+ welcome(){tone(120,0,.9,"sine",.35,500);tone(200,0,.9,"sawtooth",.04,900);tone(65,.3,1.2,"sine",.4,45);
+  tone(523,.35,.5,"triangle",.15);tone(784,.95,.7,"triangle",.15);[523,659,784,1047].forEach(f=>tone(f,1.5,1.6,"sine",.09))}};
+function toggleMute(){S.mute=!S.mute;$("mute").textContent="Sound: "+(S.mute?"off":"on");save();ctx();sfx.click()}
+$("mute").textContent="Sound: "+(S.mute?"off":"on");
+
+/* XP + LEVELS */
+function addXP(n){const from=S.lvl;S.xp+=n;while(S.xp>=need(S.lvl)){S.xp-=need(S.lvl);S.lvl++}renderAll();if(S.lvl>from)levelUp(from)}
+function levelUp(from){$("oL").textContent=from;$("nL").textContent=S.lvl;$("nS").textContent="Stage: "+stageOf(S.lvl);$("tip").textContent=tipOf(S.lvl);showP("p1");
+ const o=$("ov");o.classList.remove("show");void o.offsetWidth;o.classList.add("show");sfx.level()}
+function closeOv(){sfx.click();$("ov").classList.remove("show")}
+document.querySelectorAll(".ptabs button").forEach(b=>b.onclick=()=>{sfx.click();showP(b.dataset.p)});
+function showP(id){document.querySelectorAll(".ptabs button,.ptab").forEach(e=>e.classList.remove("on"));document.querySelector('.ptabs [data-p="'+id+'"]').classList.add("on");$(id).classList.add("on")}
+
+/* QUOTES */
+const quotes=["Discipline is choosing what you want most over what you want now.","Small progress is still progress.","Your future is created by what you do today.","Success begins with self-control.","One day or day one. You decide.","Dream big. Start small. Act now.","You are stronger than your distractions.","Consistency creates results.","Focus on progress, not perfection.","Your only competition is who you were yesterday.","Great things take time. Keep going.","You don't need to be perfect. You need to be consistent."];
+function showQuote(){let r;do{r=Math.floor(Math.random()*quotes.length)}while(r===S.qi&&quotes.length>1);S.qi=r;$("quote").textContent='"'+quotes[r]+'"';save()}
+
+/* STREAK */
+function updateStreak(){const t=todayS();
+ if(S.last!==t){if(S.last){const diff=Math.round((new Date(t+"T00:00:00")-new Date(S.last+"T00:00:00"))/864e5);S.streak=diff===1?S.streak+1:1}else S.streak=1;S.last=t;S.best=Math.max(S.best,S.streak)}
+ $("streak").textContent=S.streak;$("best").textContent=S.best;
+ $("streakMsg").textContent=S.streak===1?"Good start. Come back tomorrow to build your streak.":S.streak<7?"Keep showing up every day.":S.streak<30?"Strong consistency. Keep going.":"This is now a habit. Keep it up.";
+ const names=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],w=$("week");w.innerHTML="";
+ for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);const e=document.createElement("div");e.className="day"+(i<S.streak?" on":"")+(i===0?" today":"");e.innerHTML=names[d.getDay()]+"<br>"+(i<S.streak?"&#10003;":"&bull;");w.appendChild(e)}}
+
+/* GOALS */
+function renderGoals(){const L=$("gList");L.innerHTML="";
+ S.goals.forEach((g,i)=>{const d=document.createElement("div");d.className="row"+(g.d?" done":"");
+  const t=document.createElement("span");t.className="t";t.textContent=g.t;
+  const tg=document.createElement("span");tg.className="tag";tg.textContent="+10 XP";
+  const b=document.createElement("button");b.className="btn";b.textContent=g.d?"UNDO":"DONE";b.onclick=()=>toggleGoal(i);
+  const x=document.createElement("button");x.className="btn x";x.textContent="X";x.setAttribute("aria-label","Delete goal");x.onclick=()=>{S.goals.splice(i,1);renderAll()};
+  d.append(t,tg,b,x);L.appendChild(d)});
+ if(!S.goals.length)L.innerHTML='<p style="margin-top:12px">No goals yet. Add one below.</p>';
+ const n=S.goals.filter(g=>g.d).length;$("gDone").textContent=n;
+ const pct=S.goals.length?Math.round(n/S.goals.length*100):0;
+ $("gBar").style.width=pct+"%";$("gTxt").textContent=pct+"% of today's goals completed";
+ const st=[["Seed","Your growth begins here.",0],["Sprout","Something is starting to grow.",1],["Growing","Good momentum. Keep going.",3],["Blooming","Strong progress today.",5],["Thriving","Outstanding day. Look how far you have come.",8]];
+ let c=st[0];st.forEach(s=>{if(n>=s[2])c=s});$("gName").textContent=c[0];$("gMsg").textContent=c[1];
+ document.querySelectorAll("#gStages span").forEach(s=>s.classList.toggle("hit",n>=+s.dataset.n))}
+function toggleGoal(i){const g=S.goals[i];g.d=!g.d;
+ if(g.d){sfx.done();if(!g.r){g.r=true;renderAll();setTimeout(()=>addXP(10),150);return}}else sfx.click();renderAll()}
+function addGoal(){const v=$("gIn").value.trim();if(!v){sfx.soft();return}S.goals.push({t:v,d:false,r:false});$("gIn").value="";sfx.click();renderAll()}
+$("gIn").addEventListener("keydown",e=>{if(e.key==="Enter")addGoal()});
+
+/* CHALLENGES */
+function renderCh(){const L=$("cList");L.innerHTML="";
+ S.ch.forEach((c,i)=>{const d=document.createElement("div");d.className="row"+(c.d?" done":"");
+  const t=document.createElement("span");t.className="t";t.textContent=c.t;
+  const tg=document.createElement("span");tg.className="tag";tg.textContent="+"+c.x+" XP";
+  const b=document.createElement("button");b.className="btn";b.textContent=c.d?"DONE":"ACCEPT";b.disabled=c.d;b.onclick=()=>{c.d=true;sfx.done();renderAll();setTimeout(()=>addXP(c.x),150)};
+  d.append(t,tg,b);L.appendChild(d)})}
+
+/* TIMER */
+let tLeft=1500,tMode="focus",tIv=null,tEnd=0;
+const fmt=s=>String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0");
+function showT(){$("timer").textContent=fmt(tLeft)}
+function startT(){if(tIv)return;sfx.soft();tEnd=Date.now()+tLeft*1000;
+ tIv=setInterval(()=>{tLeft=Math.max(0,Math.round((tEnd-Date.now())/1000));showT();
+  if(tLeft<=0){clearInterval(tIv);tIv=null;sfx.done();
+   if(tMode==="focus"){$("tMsg").textContent="Focus session complete. +25 XP. Take a 5-minute break.";tLeft=1500;showT();addXP(25)}
+   else{$("tMsg").textContent="Break finished. Ready to focus again?";tMode="focus";$("mode").textContent="Focus session";tLeft=1500;showT()}}},250)}
+function pauseT(){if(!tIv)return;clearInterval(tIv);tIv=null;sfx.click()}
+function resetT(){clearInterval(tIv);tIv=null;tMode="focus";tLeft=1500;$("mode").textContent="Focus session";$("tMsg").textContent="Timer reset. Completing a focus session gives +25 XP.";sfx.click();showT()}
+function setBreak(){clearInterval(tIv);tIv=null;tMode="break";tLeft=300;$("mode").textContent="Break: rest and recharge";sfx.click();showT()}
+
+function renderAll(){
+ $("hLvl").textContent=S.lvl;$("lvl").textContent=S.lvl;$("xp").textContent=S.xp;$("stage").textContent=stageOf(S.lvl);
+ $("xpBar").style.width=(S.xp/need(S.lvl)*100)+"%";$("xpTxt").textContent=S.xp+" / "+need(S.lvl)+" XP to next level";
+ renderGoals();renderCh();save()}
+renderAll();updateStreak();showQuote();showT();save();
+
+/* WELCOME SCREEN */
+(function(){
+ const wel=$("wel"),inp=$("wName");let busy=false;
+ const saved=(store.get("dx_name")||"").trim();
+ if(saved){inp.value=saved;$("wTitle").textContent="[ WELCOME BACK ]";$("wSub").textContent="Confirm your name or change it.";$("wGo").textContent="CONTINUE"}
+ setTimeout(()=>inp.focus(),100);
+ function go(){
+  if(busy)return;const name=inp.value.trim().replace(/\s+/g," ");
+  if(!name){sfx.soft();inp.focus();return}
+  busy=true;store.set("dx_name",name);
+  $("wN").textContent=name.toUpperCase();
+  ctx();sfx.welcome();wel.classList.add("go");
+  setTimeout(()=>wel.classList.add("out"),3300);
+  setTimeout(()=>wel.classList.add("gone"),4400)}
+ $("wGo").onclick=go;
+ inp.addEventListener("keydown",e=>{if(e.key==="Enter")go()});
+})();
+
+/* LANGUAGES */
+const LANGS=[["en","English"],["ar","العربية"]];
+const TR={ar:{"$pct":"تم إنجاز #% من أهداف اليوم","$xp":"# / @ XP للمستوى التالي","$stage":"المرحلة",
+"[ WHAT SHOULD WE CALL YOU? ]":"[ بماذا نناديك؟ ]","Enter your name to begin your journey.":"أدخل اسمك لتبدأ رحلتك.","Your name...":"اسمك...","BEGIN":"ابدأ","CONTINUE":"متابعة","[ WELCOME BACK ]":"[ مرحبًا بعودتك ]","Confirm your name or change it.":"أكّد اسمك أو غيّره.","[ IDENTITY CONFIRMED ]":"[ تم تأكيد الهوية ]","WELCOME":"مرحبًا بك",
+"Sound: on":"الصوت: يعمل","Sound: off":"الصوت: متوقف",
+"Build habits. Control distractions. Become better.":"ابنِ العادات. تحكّم في المشتتات. كن أفضل.","[ YOUR SELF-IMPROVEMENT JOURNEY ]":"[ رحلتك لتطوير الذات ]","Become 1% Better Every Day.":"كن أفضل بنسبة 1% كل يوم.","Your path to better focus, stronger habits and a disciplined life starts here. Take small steps, stay consistent and level up.":"طريقك نحو تركيز أفضل وعادات أقوى وحياة منضبطة يبدأ من هنا. خذ خطوات صغيرة، وحافظ على الاستمرارية، وارتقِ.",
+"LEVEL":"المستوى","Beginner":"مبتدئ","Builder":"بنّاء","Focused":"متركّز","Disciplined":"منضبط","Master":"متقن",
+"[ DAILY STREAK ]":"[ التتابع اليومي ]","days":"أيام","Start your journey today.":"ابدأ رحلتك اليوم.","Best streak:":"أفضل تتابع:","Good start. Come back tomorrow to build your streak.":"بداية جيدة. عد غدًا لتبني تتابعك.","Keep showing up every day.":"واصل الحضور كل يوم.","Strong consistency. Keep going.":"استمرارية قوية. واصل.","This is now a habit. Keep it up.":"أصبحت هذه عادة. حافظ عليها.",
+"Sun":"أحد","Mon":"اثنين","Tue":"ثلاثاء","Wed":"أربعاء","Thu":"خميس","Fri":"جمعة","Sat":"سبت",
+"[ DAILY MOTIVATION ]":"[ تحفيز يومي ]","NEW QUOTE":"اقتباس جديد",
+"Discipline is choosing what you want most over what you want now.":"الانضباط هو أن تختار ما تريده أكثر على ما تريده الآن.","Small progress is still progress.":"التقدم الصغير يظل تقدمًا.","Your future is created by what you do today.":"مستقبلك يصنعه ما تفعله اليوم.","Success begins with self-control.":"النجاح يبدأ بضبط النفس.","One day or day one. You decide.":"يومًا ما أو اليوم الأول. القرار لك.","Dream big. Start small. Act now.":"احلم كبيرًا. ابدأ صغيرًا. تحرّك الآن.","You are stronger than your distractions.":"أنت أقوى من مشتتاتك.","Consistency creates results.":"الاستمرارية تصنع النتائج.","Focus on progress, not perfection.":"ركّز على التقدم لا على الكمال.","Your only competition is who you were yesterday.":"منافسك الوحيد هو أنت بالأمس.","Great things take time. Keep going.":"الأشياء العظيمة تحتاج وقتًا. واصل.","You don't need to be perfect. You need to be consistent.":"لا تحتاج أن تكون كاملًا. تحتاج أن تكون مستمرًا.",
+"[ FOCUS TIMER ]":"[ مؤقت التركيز ]","Work without distractions. Take a short break when you finish.":"اعمل دون مشتتات. خذ استراحة قصيرة عند الانتهاء.","Focus session":"جلسة تركيز","START":"ابدأ","PAUSE":"إيقاف مؤقت","RESET":"إعادة ضبط","5-MIN BREAK":"استراحة 5 دقائق","Completing a focus session gives +25 XP.":"إكمال جلسة تركيز يمنحك +25 XP.","Focus session complete. +25 XP. Take a 5-minute break.":"اكتملت جلسة التركيز. +25 XP. خذ استراحة 5 دقائق.","Break finished. Ready to focus again?":"انتهت الاستراحة. هل أنت مستعد للتركيز مجددًا؟","Timer reset. Completing a focus session gives +25 XP.":"تمت إعادة ضبط المؤقت. إكمال جلسة تركيز يمنحك +25 XP.","Break: rest and recharge":"استراحة: ارتح واستعد نشاطك",
+"[ DAILY GOALS ]":"[ أهداف اليوم ]","Set your goals and complete them one by one.":"حدّد أهدافك وأنجزها واحدًا تلو الآخر.","Enter a new goal...":"أدخل هدفًا جديدًا...","+ ADD GOAL":"+ إضافة هدف","Completed today:":"أُنجز اليوم:","goals":"أهداف","DONE":"تم","UNDO":"تراجع","ACCEPT":"أقبل","No goals yet. Add one below.":"لا أهداف بعد. أضف هدفًا أدناه.","Study for 25 minutes":"ادرس لمدة 25 دقيقة","Spend time away from screens":"اقضِ وقتًا بعيدًا عن الشاشات","Exercise for 15 minutes":"مارس الرياضة لمدة 15 دقيقة",
+"[ DAILY CHALLENGES ]":"[ تحديات اليوم ]","Complete these for bonus XP. They reset every day.":"أكملها للحصول على XP إضافي. تتجدد كل يوم.","Avoid unnecessary phone use for 30 minutes":"تجنّب استخدام الهاتف دون حاجة لمدة 30 دقيقة","Study or read for 20 minutes":"ادرس أو اقرأ لمدة 20 دقيقة","Drink enough water today":"اشرب كمية كافية من الماء اليوم","Be active for at least 15 minutes":"كن نشيطًا 15 دقيقة على الأقل","Sleep on time tonight":"نم في الوقت المناسب الليلة",
+"[ PROGRESS GROWTH ]":"[ نمو التقدم ]","Every goal you complete today moves you forward.":"كل هدف تنجزه اليوم يدفعك إلى الأمام.","Seed":"بذرة","Sprout":"برعم","Growing":"ينمو","Blooming":"يتفتح","Thriving":"يزدهر","Your growth begins here.":"نموّك يبدأ من هنا.","Something is starting to grow.":"شيء ما بدأ ينمو.","Good momentum. Keep going.":"زخم جيد. واصل.","Strong progress today.":"تقدم قوي اليوم.","Outstanding day. Look how far you have come.":"يوم رائع. انظر كم قطعت من الطريق.",
+"Small steps. Big changes. Better you.":"خطوات صغيرة. تغييرات كبيرة. نسخة أفضل منك.",
+"[ NOTIFICATION ]":"[ إشعار ]","Theme":"الألوان","[ THEME COLOR ]":"[ لون التطبيق ]","Custom color":"لون مخصص","LEVEL UP":"ارتقاء المستوى","[ LEVEL UP ]":"[ ارتقاء المستوى ]","RESULT":"النتيجة","NEXT STEP":"الخطوة التالية","You have leveled up.":"لقد ارتقيت إلى مستوى جديد.","Notice what pulls your attention away. Awareness comes first.":"لاحظ ما يشتت انتباهك. الوعي هو الخطوة الأولى.","Make distractions harder to reach. Put your phone in another room.":"اجعل المشتتات بعيدة المنال. ضع هاتفك في غرفة أخرى.","Protect your routines. Sleep and movement keep your focus strong.":"احمِ روتينك. النوم والحركة يحافظان على قوة تركيزك.","Plan for hard days in advance with if-then rules.":"خطط للأيام الصعبة مسبقًا بقواعد «إذا حدث كذا فسأفعل كذا».","Help someone else build a habit. Teaching locks it in.":"ساعد شخصًا آخر على بناء عادة. التعليم يرسّخها."}};
+let L=store.get("dx_lang");if(!TR[L])L="en";
+function tr(s){if(L==="en")return s;const d=TR[L];let m=s.match(/^"(.*)"$/);if(m){const r=d[m[1]];return r?'"'+r+'"':s}
+ if(d[s])return d[s];
+ m=s.match(/^(\d+)% of today's goals completed$/);if(m)return d.$pct.replace("#",m[1]);
+ m=s.match(/^(\d+) \/ (\d+) XP to next level$/);if(m)return d.$xp.replace("#",m[1]).replace("@",m[2]);
+ m=s.match(/^Stage: (.+)$/);if(m)return d.$stage+": "+(d[m[1]]||m[1]);
+ return s}
+function walkLang(){
+ const w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,{acceptNode:n=>/^(SCRIPT|STYLE)$/.test(n.parentNode.nodeName)?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT});
+ const arr=[];while(w.nextNode())arr.push(w.currentNode);
+ arr.forEach(n=>{const cur=n.nodeValue;const src=(n.__t!==undefined&&cur===n.__t)?n.__o:cur;const tm=src.trim();if(!tm)return;
+  const t=tr(tm);const out=t===tm?src:src.replace(tm,()=>t);n.__o=src;n.__t=out!==src?out:undefined;if(out!==cur)n.nodeValue=out});
+ document.querySelectorAll("input[placeholder]").forEach(i=>{if(i.dataset.ph===undefined)i.dataset.ph=i.placeholder;const t=tr(i.dataset.ph);if(i.placeholder!==t)i.placeholder=t})}
+function setLang(l){L=l;store.set("dx_lang",l);document.documentElement.lang=l;document.documentElement.dir=l==="ar"?"rtl":"ltr";walkLang();drawLangs();sfx.click()}
+function drawLangs(){const box=$("langs");box.innerHTML="";
+ LANGS.forEach(([c,n])=>{const b=document.createElement("button");b.className="lg"+(c===L?" on":"");b.textContent=n;b.onclick=()=>setLang(c);box.appendChild(b)});
+ $("lgBtn").textContent=LANGS.find(x=>x[0]===L)[1]}
+$("lgBtn").onclick=()=>{const i=LANGS.findIndex(x=>x[0]===L);setLang(LANGS[(i+1)%LANGS.length][0])};
+document.documentElement.lang=L;document.documentElement.dir=L==="ar"?"rtl":"ltr";drawLangs();walkLang();
+new MutationObserver(walkLang).observe(document.body,{childList:true,subtree:true,characterData:true});
+
+/* THEME COLORS */
+const THEMES=[["Blue","#3aa0ff"],["Purple","#a664ff"],["Green","#2ecc71"],["Orange","#ff9830"],["Pink","#ff5cb4"],["Red","#ff4d5e"],["Gold","#f5c542"]];
+const hex2rgb=h=>{const n=parseInt(h.slice(1),16);return[n>>16&255,n>>8&255,n&255]};
+const mixc=(c,t,a)=>c.map(v=>Math.round(v+(t-v)*a));
+const toHex=c=>"#"+c.map(v=>v.toString(16).padStart(2,"0")).join("");
+function applyTheme(h){const c=hex2rgb(h),r=document.documentElement.style;
+ r.setProperty("--rgb",c.join(","));r.setProperty("--blue",h);r.setProperty("--cyan",toHex(mixc(c,255,.5)));r.setProperty("--deep",toHex(mixc(c,0,.5)));r.setProperty("--glow",toHex(mixc(c,0,.8)));
+ store.set("dx_theme",h);$("cc").value=h;drawTheme(h)}
+function drawTheme(h){const box=$("sw");box.innerHTML="";
+ THEMES.forEach(([n,c])=>{const b=document.createElement("button");b.style.color=c;b.className=c===h?"on":"";b.setAttribute("aria-label",n);b.onclick=()=>{sfx.click();applyTheme(c)};box.appendChild(b)})}
+$("thBtn").onclick=e=>{e.stopPropagation();sfx.click();$("thPanel").classList.toggle("show")};
+document.addEventListener("click",e=>{if(!e.target.closest(".hd-right"))$("thPanel").classList.remove("show")});
+$("cc").addEventListener("input",e=>applyTheme(e.target.value));
+(function(){const h=store.get("dx_theme");applyTheme(/^#[0-9a-f]{6}$/i.test(h||"")?h:"#3aa0ff")})();
+</script>
+</body>
+</html>
